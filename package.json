@@ -1,0 +1,13 @@
+{
+  "name": "demo-graphQL",
+  "version": "1.0.0",
+  "description": "Working graphQL development with Node",
+  "main": "index.js",
+  "repository": "https://github.com/ishan-me/demo-graphQL",
+  "author": "Ishan Manandhar",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
