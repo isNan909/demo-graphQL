@@ -4,7 +4,8 @@ const L = require('lodash');
 const {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLBoolean
+    GraphQLBoolean,
+    GraphQLSchema
 } = graphql;
 
 var dish = [{
@@ -37,7 +38,7 @@ const DishType = new GraphQLObjectType({
             type: GraphQLBoolean
         }
     })
-})
+});
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
@@ -56,8 +57,8 @@ const RootQuery = new GraphQLObjectType({
             }
         }
     }
-})
+});
 
-module.export = new GraphQLSchema({
+module.exports = new GraphQLSchema({
     query: RootQuery
-})
+});
