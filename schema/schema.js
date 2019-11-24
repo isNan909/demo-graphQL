@@ -7,7 +7,7 @@ const {
     GraphQLBoolean,
     GraphQLSchema,
     GraphQLID,
-    GraphQLInt
+    GraphQLFloat
 } = graphql;
 
 var dish = [{
@@ -46,7 +46,7 @@ var chefs = [{
     },
     {
         id: '3',
-        name: 'John Doe',
+        name: 'Kancha Babu',
         rating: '4.5'
     }
 ]
@@ -87,7 +87,7 @@ const ChefType = new GraphQLObjectType({
             type: GraphQLString
         },
         rating: {
-            type: GraphQLInt
+            type: GraphQLFloat
         }
     })
 });
