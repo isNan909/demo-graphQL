@@ -143,6 +143,18 @@ const RootQuery = new GraphQLObjectType({
                     id: args.id
                 });
             }
+        },
+        dishes: {
+            type: new GraphQLList(DishType),
+            resolve(parent, args) {
+                return dish
+            }
+        },
+        chefs: {
+            type: new GraphQLList(ChefType),
+            resolve(parent, args) {
+                return chefs
+            }
         }
     }
 });
