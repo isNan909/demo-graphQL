@@ -5,26 +5,49 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLBoolean,
-    GraphQLSchema
+    GraphQLSchema,
+    GraphQLID,
+    GraphQLInt
 } = graphql;
 
 var dish = [{
+        id: '1',
         name: 'Lamb Salad with Fregola',
         country: 'USA',
         tasty: true,
-        id: '1'
+        chefsId: '1'
     },
     {
+        id: '2',
         name: 'Belly pork & pineapple burritos',
         country: 'Mexico',
         tasty: true,
-        id: '2'
+        chefsId: '2'
     },
     {
+        id: '3',
         name: 'Momo',
         country: 'Nepal',
         tasty: true,
-        id: '3'
+        chefsId: '3'
+    }
+]
+
+
+var chefs = [{
+        id: '1',
+        name: 'Haary Salmon',
+        rating: '3.5'
+    },
+    {
+        id: '2',
+        name: 'Jack Narito',
+        rating: '4'
+    },
+    {
+        id: '3',
+        name: 'John Doe',
+        rating: '4.5'
     }
 ]
 
@@ -32,7 +55,7 @@ const DishType = new GraphQLObjectType({
     name: 'Dish',
     fields: () => ({
         id: {
-            type: GraphQLString
+            type: GraphQLID
         },
         name: {
             type: GraphQLString
@@ -42,6 +65,29 @@ const DishType = new GraphQLObjectType({
         },
         country: {
             type: GraphQLString
+        },
+        chefs: {
+            type: ChefType,
+            resolve(parent, args) {
+                return L.find(chefs, {
+                    id: parent.chefsId
+                });
+            }
+        }
+    })
+});
+
+const ChefType = new GraphQLObjectType({
+    name: 'chefs',
+    fields: () => ({
+        id: {
+            type: GraphQLID
+        },
+        name: {
+            type: GraphQLString
+        },
+        rating: {
+            type: GraphQLInt
         }
     })
 });
@@ -53,11 +99,24 @@ const RootQuery = new GraphQLObjectType({
             type: DishType,
             args: {
                 id: {
-                    type: GraphQLString
+                    type: GraphQLID
                 }
             },
             resolve(parent, args) {
                 return L.find(dish, {
+                    id: args.id
+                });
+            }
+        },
+        chefs: {
+            type: ChefType,
+            args: {
+                id: {
+                    type: GraphQLID
+                }
+            },
+            resolve(parent, args) {
+                return L.find(chefs, {
                     id: args.id
                 });
             }
