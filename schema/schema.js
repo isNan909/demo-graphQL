@@ -7,7 +7,8 @@ const {
     GraphQLBoolean,
     GraphQLSchema,
     GraphQLID,
-    GraphQLFloat
+    GraphQLFloat,
+    GraphQLList
 } = graphql;
 
 var dish = [{
@@ -27,6 +28,20 @@ var dish = [{
     {
         id: '3',
         name: 'Momo',
+        country: 'Nepal',
+        tasty: true,
+        chefsId: '3'
+    },
+    {
+        id: '4',
+        name: 'Firewood Pizza',
+        country: 'Mexico',
+        tasty: true,
+        chefsId: '2'
+    },
+    {
+        id: '5',
+        name: 'Samosa',
         country: 'Nepal',
         tasty: true,
         chefsId: '3'
@@ -88,6 +103,14 @@ const ChefType = new GraphQLObjectType({
         },
         rating: {
             type: GraphQLFloat
+        },
+        dish: {
+            type: new GraphQLList(DishType),
+            resolve(parent, args) {
+                return L.filter(dish, {
+                    chefsId: parent.id
+                })
+            }
         }
     })
 });
