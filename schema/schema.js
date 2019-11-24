@@ -11,16 +11,19 @@ const {
 var dish = [{
         name: 'Lamb Salad with Fregola',
         country: 'USA',
+        tasty: true,
         id: '1'
     },
     {
         name: 'Belly pork & pineapple burritos',
         country: 'Mexico',
+        tasty: true,
         id: '2'
     },
     {
-        name: 'Dumpling',
-        country: 'China',
+        name: 'Momo',
+        country: 'Nepal',
+        tasty: true,
         id: '3'
     }
 ]
@@ -36,6 +39,9 @@ const DishType = new GraphQLObjectType({
         },
         tasty: {
             type: GraphQLBoolean
+        },
+        country: {
+            type: GraphQLString
         }
     })
 });
@@ -51,7 +57,7 @@ const RootQuery = new GraphQLObjectType({
                 }
             },
             resolve(parent, args) {
-                L.find(dish, {
+                return L.find(dish, {
                     id: args.id
                 });
             }
