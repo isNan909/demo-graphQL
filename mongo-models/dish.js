@@ -1,5 +1,5 @@
 const mongo = require('mongoose');
-const Schema = mongoose.Schema;
+const Schema = mongo.Schema;
 
 const dishSchema = new Schema({
     name: String,

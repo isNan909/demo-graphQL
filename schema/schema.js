@@ -1,6 +1,9 @@
 const graphql = require('graphql');
 const L = require('lodash');
 
+const Dish = require('../mongo-models/dish');
+const Chef = require('../mongo-models/chef');
+
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -11,60 +14,6 @@ const {
     GraphQLList
 } = graphql;
 
-var dish = [{
-        id: '1',
-        name: 'Lamb Salad with Fregola',
-        country: 'USA',
-        tasty: true,
-        chefsId: '1'
-    },
-    {
-        id: '2',
-        name: 'Belly pork & pineapple burritos',
-        country: 'Mexico',
-        tasty: true,
-        chefsId: '2'
-    },
-    {
-        id: '3',
-        name: 'Momo',
-        country: 'Nepal',
-        tasty: true,
-        chefsId: '3'
-    },
-    {
-        id: '4',
-        name: 'Firewood Pizza',
-        country: 'Mexico',
-        tasty: true,
-        chefsId: '2'
-    },
-    {
-        id: '5',
-        name: 'Samosa',
-        country: 'Nepal',
-        tasty: true,
-        chefsId: '3'
-    }
-]
-
-
-var chefs = [{
-        id: '1',
-        name: 'Haary Salmon',
-        rating: '3.5'
-    },
-    {
-        id: '2',
-        name: 'Jack Narito',
-        rating: '4'
-    },
-    {
-        id: '3',
-        name: 'Kancha Babu',
-        rating: '4.5'
-    }
-]
 
 const DishType = new GraphQLObjectType({
     name: 'Dish',
@@ -159,6 +108,35 @@ const RootQuery = new GraphQLObjectType({
     }
 });
 
+const Mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addDish: {
+            type: DishType,
+            args: {
+                name: {
+                    type: GraphQLString
+                },
+                country: {
+                    type: GraphQLString
+                },
+                tasty: {
+                    type: GraphQLBoolean
+                }
+            },
+            resolve(parent, args) {
+                let dish = new Dish({
+                    name: args.name,
+                    country: args.country,
+                    tasty: args.tasty,
+                });
+                return dish.save();
+            }
+        }
+    }
+})
+
 module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    mutation: Mutation
 });
